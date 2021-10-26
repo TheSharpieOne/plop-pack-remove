@@ -1,0 +1,9 @@
+{
+  "name": "plop-pack-remove",
+  "version": "1.0.0",
+  "description": "Plop action to remove files",
+  "main": "index.js",
+  "repository": "git@github.com:TheSharpieOne/plop-pack-remove.git",
+  "author": "Evan Sharp <me@thesharpieone.com>",
+  "license": "MIT"
+}
