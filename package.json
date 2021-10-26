@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "git@github.com:TheSharpieOne/plop-pack-remove.git",
   "author": "Evan Sharp <me@thesharpieone.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "del": "^6.0.0"
+  }
 }
