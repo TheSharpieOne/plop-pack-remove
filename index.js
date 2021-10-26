@@ -21,7 +21,7 @@ const makePath = (data, cfg, plop) => {
   );
 };
 
-async function removeFile(data, cfg, plop) {
+async function remove(data, cfg, plop) {
   const { force, skipIfNonexistent = false } = cfg;
   const filePath = makePath(data, cfg, plop);
   const exists = await fileExists(filePath);
@@ -29,12 +29,19 @@ async function removeFile(data, cfg, plop) {
     if (skipIfNonexistent) { return `[SKIPPED] ${filePath} (does not exist)`; }
     throw `File already does not exists (set skipIfNonexistent to true to ignore this error)\n -> ${fileDestPath}`;
   } else {
-    await del([filePath], { force });
+    const deletedFilePaths = await del([filePath], { force });
+    return `Deleted files:\n -> ${deletedFilePaths.map(filePath => getRelativeToBasePath(filePath, plop)).join('\n -> ')}`;
   }
-  return getRelativeToBasePath(filePath, plop);
+}
+
+async function removeMany(data, cfg, plop) {
+  const { path, force } = cfg;
+  const deletedFilePaths = await del(Array.isArray(path)? path : [path], { force });
+  return `Deleted files:\n -> ${deletedFilePaths.map(filePath => getRelativeToBasePath(filePath, plop)).join('\n -> ')}`;
 }
 
 module.exports = function (plop) {
   plop.setDefaultInclude({ actionTypes: true });
-  plop.setActionType('removeFile', removeFile);
+  plop.setActionType('remove', remove);
+  plop.setActionType('removeMany', removeMany);
 };
